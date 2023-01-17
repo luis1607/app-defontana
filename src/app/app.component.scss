@@ -1,0 +1,11 @@
+@import '../assets/sass/indes.scss';
+
+.container{
+    background-color: green;
+}
+
+@include media-up('lg'){
+    .container{
+        background-color: red;
+    }
+}

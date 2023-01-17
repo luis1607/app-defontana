@@ -1,0 +1,86 @@
+<div style="position: relative;">
+  <h1 class="title-main">TEST ANGULAR</h1>
+
+  <div *ngIf="messageError" class="alert alert-danger">
+    <h4>{{messageError}}</h4>
+  </div>
+
+<div class="main-container">
+    <div class="table-container mb-3">
+      <h3>Filtro pokemons</h3>
+        <form #f="ngForm" >
+            <mat-form-field class="w-100" appearance="outline">
+              <input
+                matInput
+                placeholder="Pokemon"
+                [matAutocomplete]="auto"
+                name="pokemon"
+                #joke="ngModel"
+                [(ngModel)]="filterInput"
+                (ngModelChange)="doFilter()"
+                (keyup)="search()"
+              />
+            </mat-form-field>
+          
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let pokemon of pokemonFilter | async" [value]="pokemon.name">
+                {{pokemon.name}}
+              </mat-option>
+            </mat-autocomplete>
+
+          </form>
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col" *ngFor="let header of headerTablePokemon">{{header}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pokemon of listPokemon | paginationSearch:pagePokems:filterInput:limitPokemon" (click)="getDetailPokemon(pokemon.name)" style="cursor: pointer;">
+                <th scope="row">{{pokemon.id}}</th>
+                <td>{{pokemon.name}}</td>
+              </tr>
+            </tbody>   
+          </table>
+
+          <div class="d-flex justify-content-center gap-4">
+            <button mat-stroked-button color="primary" (click)="prevPage('pokemon')">Anteior</button>
+            <button [disabled]="(listPokemon | paginationSearch:pagePokems:filterInput:limitPokemon).length < limitPokemon" class="ml-2" mat-stroked-button color="primary" (click)="nextPage('pokemon')">Siguiente</button>
+          </div>
+        
+    </div>
+    <div class="detail-container p-2">
+      <app-detail-pokemon [img]="pokemonDetail.img" [name]="pokemonDetail.name" [abilities]="pokemonDetail.abilities"></app-detail-pokemon>
+    </div>
+</div>
+
+<div class="p-4">
+  <h3 class="mb-4">Cantidad de pokemon por letra inicial</h3>
+  <table class="table table-striped ">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" *ngFor="let header of headerTableQuantity">{{header}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pokemon of listQuantityForFirstLetter | pagination:pageQuantity:limitQuantity">
+        <th scope="row">{{pokemon.letter | uppercase}}</th>
+        <td>{{pokemon?.quantity}}</td>
+      </tr>
+    </tbody>
+    
+  </table>
+  <div class="d-flex justify-content-center gap-4">
+    <button mat-stroked-button color="primary" (click)="prevPage('quantity')">Anteior</button>
+    <button [disabled]="(listQuantityForFirstLetter | pagination:pageQuantity:limitQuantity).length < limitQuantity" class="ml-2" mat-stroked-button color="primary" (click)="nextPage('quantity')">Siguiente</button>
+  </div>
+
+</div>
+
+<div class="container-loader" *ngIf="loaderService.isLoading | async">
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+</div>

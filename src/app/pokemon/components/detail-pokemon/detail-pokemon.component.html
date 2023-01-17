@@ -1,0 +1,13 @@
+<div *ngIf="img" class="text-center container-card">
+    <div class="container-img">
+        <img [src]="img" alt="">
+    </div>
+    <h3>{{name}}</h3>
+    <ul>
+        <li *ngFor="let abilitie of abilities">{{abilitie}}</li>
+    </ul>
+</div>
+
+<div *ngIf="!img" class="text-center">
+    <h3>Seleccione un pokemon</h3>
+</div>

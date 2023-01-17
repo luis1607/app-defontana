@@ -1,0 +1,46 @@
+@import '../../../../assets/sass/indes.scss';
+
+.title-main {
+    text-align: center;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+.btn-search {
+    width: 100%;
+}
+
+.main-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-loader {
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    position: absolute;
+    opacity: 0.5;
+    background-color: Black;
+}
+
+
+@include media-up('md') {
+    .main-container {
+        flex-direction: row;
+        gap: 40px;
+        .table-container {
+            width: 60%;
+        }
+
+        .detail-container {
+            margin-top: 40px;
+            width: 40%;
+        }
+    }
+}
